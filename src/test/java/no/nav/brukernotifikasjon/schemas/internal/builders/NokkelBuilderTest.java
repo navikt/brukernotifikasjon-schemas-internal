@@ -16,6 +16,7 @@ public class NokkelBuilderTest {
 
     private String expectedSystembruker = "enSystemBruker";
     private String expectedEventID = UUID.randomUUID().toString();
+    private String expectedFodselsnr = "12345678901";;
 
     @Test
     void skalGodtaEventerMedGyldigeFeltverdier() {
@@ -24,6 +25,7 @@ public class NokkelBuilderTest {
 
         assertThat(nokkel.getSystembruker(), is(expectedSystembruker));
         assertThat(nokkel.getEventId(), is(expectedEventID));
+        assertThat(nokkel.getFodselsnummer(), is(expectedFodselsnr));
     }
 
     @Test
@@ -35,16 +37,32 @@ public class NokkelBuilderTest {
     }
 
     @Test
+    void skalIkkeGodtaUgyldigFodselsnummer() {
+        String tooLongFodselsnummer = String.join("", Collections.nCopies(11, "12"));
+        NokkelBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(tooLongFodselsnummer);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("fodselsnummer"));
+    }
+
+    @Test
     void skalIkkeGodtaManglendeSystembruker() {
         NokkelBuilder builder = getBuilderWithDefaultValues().withSystembruker(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("systembruker"));
     }
 
+    @Test
+    void skalIkkeGodtaManglendeFodselsnummer() {
+        NokkelBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(null);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("fodselsnummer"));
+    }
+
     private NokkelBuilder getBuilderWithDefaultValues() {
         return new NokkelBuilder()
                 .withSystembruker(expectedSystembruker)
-                .withEventId(expectedEventID);
+                .withEventId(expectedEventID)
+                .withFodselsnummer(expectedFodselsnr);
     }
 
 }

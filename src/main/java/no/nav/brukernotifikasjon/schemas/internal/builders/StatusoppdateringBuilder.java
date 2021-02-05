@@ -17,7 +17,6 @@ public class StatusoppdateringBuilder {
     private StatusGlobal statusGlobal;
     private String statusIntern;
     private String sakstema;
-    private String fodselsnummer;
 
     public StatusoppdateringBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
@@ -54,11 +53,6 @@ public class StatusoppdateringBuilder {
         return this;
     }
 
-    public StatusoppdateringBuilder withFodselsnummer(String fodselsnummer) {
-        this.fodselsnummer = fodselsnummer;
-        return this;
-    }
-
     public Statusoppdatering build() {
         return new Statusoppdatering(
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
@@ -68,7 +62,6 @@ public class StatusoppdateringBuilder {
                 ValidationUtil.validateStatusGlobal(statusGlobal),
                 ValidationUtil.validateNonNullFieldMaxLength(statusIntern, "statusIntern", ValidationUtil.MAX_LENGTH_STATUSINTERN),
                 ValidationUtil.validateNonNullFieldMaxLength(sakstema, "sakstema", ValidationUtil.MAX_LENGTH_SAKSTEMA),
-                ValidationUtil.validateFodselsnummer(fodselsnummer)
         );
     }
 }

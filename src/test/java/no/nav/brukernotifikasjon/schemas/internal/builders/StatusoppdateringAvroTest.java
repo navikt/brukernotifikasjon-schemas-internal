@@ -34,7 +34,6 @@ public class StatusoppdateringAvroTest {
                 .setLink("https://gyldig.url")
                 .setStatusGlobal(StatusGlobal.UNDER_BEHANDLING.toString())
                 .setSakstema("FP")
-                .setFodselsnummer("12345678901")
                 .build();
     }
 }
