@@ -1,7 +1,8 @@
 
-# Brukernotifikasjon-schemas
+# Brukernotifikasjon-schemas-internal
 
-Avro-skjemaer for brukernotifikasjon-Kafka-topic-ene som bla DittNAV bruker for å vise notifikasjoner til sluttbrukere. Se alle releases [her](https://jitpack.io/#navikt/brukernotifikasjon-schemas).
+Avro-skjemaer for internt bruk av team DittNAV. 
+Interne topics som bla DittNAV bruker for å vise notifikasjoner til sluttbrukere.
 
 
 # Feltbeskrivelser
@@ -14,7 +15,7 @@ Les mer om feltbeskrivelsene [her](https://navikt.github.io/brukernotifikasjon-d
 
 ## For å gjøre en release
 
-Hver gang det merges til master blir det gjort en release på Jitpack. Se [her](https://jitpack.io/#navikt/brukernotifikasjon-schemas) for alle releases.
+Hver gang det merges til master blir det gjort en release på Jitpack. Se [her](https://jitpack.io/#navikt/brukernotifikasjon-schemas-internal) for alle releases.
 
 # Henvendelser
 

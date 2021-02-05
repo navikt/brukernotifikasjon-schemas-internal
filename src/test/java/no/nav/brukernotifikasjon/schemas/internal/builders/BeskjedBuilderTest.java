@@ -1,7 +1,8 @@
-package no.nav.brukernotifikasjon.schemas.builders;
+package no.nav.brukernotifikasjon.schemas.internal.builders;
 
-import no.nav.brukernotifikasjon.schemas.Oppgave;
-import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
+import no.nav.brukernotifikasjon.schemas.Beskjed;
+import no.nav.brukernotifikasjon.schemas.internal.builders.exception.FieldValidationException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -9,16 +10,18 @@ import org.junit.jupiter.api.TestInstance;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.Collections;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class OppgaveBuilderTest {
+public class BeskjedBuilderTest {
 
     private String expectedFodselsnr;
     private String expectedGrupperingsId;
@@ -26,7 +29,8 @@ class OppgaveBuilderTest {
     private URL expectedLink;
     private String expectedTekst;
     private LocalDateTime expectedTidspunkt;
-    private Boolean eksternVarsling;
+    private LocalDateTime expectedSynligFremTil;
+    private Boolean expectedEksternVarsling;
 
     @BeforeAll
     void setUp() throws MalformedURLException {
@@ -34,37 +38,40 @@ class OppgaveBuilderTest {
         expectedGrupperingsId = "3456789123456";
         expectedSikkerhetsnivaa = 4;
         expectedLink = new URL("https://gyldig.url");
-        expectedTekst = "Du må sende nytt meldekort";
-        expectedTidspunkt = LocalDateTime.now();
-        eksternVarsling = false;
+        expectedTekst = "Dette er informasjon du må lese";
+        expectedTidspunkt = LocalDateTime.now(ZoneId.of("UTC"));
+        expectedSynligFremTil = expectedTidspunkt.plusDays(2);
+        expectedEksternVarsling = false;
     }
 
     @Test
     void skalGodtaEventerMedGyldigeFeltverdier() {
-        OppgaveBuilder builder = getBuilderWithDefaultValues();
-        Oppgave oppgave = builder.build();
+        BeskjedBuilder builder = getBuilderWithDefaultValues();
+        Beskjed beskjed = builder.build();
 
-        assertThat(oppgave.getFodselsnummer(), is(expectedFodselsnr));
-        assertThat(oppgave.getGrupperingsId(), is(expectedGrupperingsId));
-        assertThat(oppgave.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
-        assertThat(oppgave.getLink(), is(expectedLink.toString()));
-        assertThat(oppgave.getTekst(), is(expectedTekst));
+        assertThat(beskjed.getFodselsnummer(), is(expectedFodselsnr));
+        assertThat(beskjed.getGrupperingsId(), is(expectedGrupperingsId));
+        assertThat(beskjed.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
+        assertThat(beskjed.getLink(), is(expectedLink.toString()));
+        assertThat(beskjed.getTekst(), is(expectedTekst));
         long expectedTidspunktAsUtcLong = expectedTidspunkt.toInstant(ZoneOffset.UTC).toEpochMilli();
-        assertThat(oppgave.getTidspunkt(), is(expectedTidspunktAsUtcLong));
-        assertThat(oppgave.getEksternVarsling(), is(eksternVarsling));
+        assertThat(beskjed.getTidspunkt(), is(expectedTidspunktAsUtcLong));
+        long expectedSynligFremTilAsUtcLong = expectedSynligFremTil.toInstant(ZoneOffset.UTC).toEpochMilli();
+        assertThat(beskjed.getSynligFremTil(), is(expectedSynligFremTilAsUtcLong));
+        assertThat(beskjed.getEksternVarsling(), is(expectedEksternVarsling));
     }
 
     @Test
     void skalIkkeGodtaUgyldigFodselsnummer() {
         String tooLongFodselsnummer = String.join("", Collections.nCopies(11, "12"));
-        OppgaveBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(tooLongFodselsnummer);
+        BeskjedBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(tooLongFodselsnummer);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("fodselsnummer"));
     }
 
     @Test
     void skalIkkeGodtaManglendeFodselsnummer() {
-        OppgaveBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(null);
+        BeskjedBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("fodselsnummer"));
     }
@@ -72,14 +79,14 @@ class OppgaveBuilderTest {
     @Test
     void skalIkkeGodtaForLangGrupperingsId() {
         String tooLongGrupperingsId = String.join("", Collections.nCopies(101, "1"));
-        OppgaveBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(tooLongGrupperingsId);
+        BeskjedBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(tooLongGrupperingsId);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
     }
 
     @Test
     void skalIkkeGodtaManglendeGrupperingsId() {
-        OppgaveBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(null);
+        BeskjedBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
     }
@@ -87,7 +94,7 @@ class OppgaveBuilderTest {
     @Test
     void skalIkkeGodtaForLavtSikkerhetsnivaa() {
         int invalidSikkerhetsnivaa = 2;
-        OppgaveBuilder builder = getBuilderWithDefaultValues().withSikkerhetsnivaa(invalidSikkerhetsnivaa);
+        BeskjedBuilder builder = getBuilderWithDefaultValues().withSikkerhetsnivaa(invalidSikkerhetsnivaa);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("Sikkerhetsnivaa"));
     }
@@ -95,47 +102,53 @@ class OppgaveBuilderTest {
     @Test
     void skalIkkeGodtaForLangLink() throws MalformedURLException {
         URL invalidLink = new URL("https://" + String.join("", Collections.nCopies(201, "n")));
-        OppgaveBuilder builder = getBuilderWithDefaultValues().withLink(invalidLink);
+        BeskjedBuilder builder = getBuilderWithDefaultValues().withLink(invalidLink);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("link"));
     }
 
     @Test
-    void skalIkkeGodtaManglendeLink() {
-        OppgaveBuilder builder = getBuilderWithDefaultValues().withLink(null);
-        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
-        assertThat(exceptionThrown.getMessage(), containsString("link"));
+    void skalGodtaManglendeLink() {
+        BeskjedBuilder builder = getBuilderWithDefaultValues().withLink(null);
+        Assertions.assertDoesNotThrow(() -> builder.build());
     }
 
     @Test
     void skalIkkeGodtaForLangTekst() {
         String tooLongTekst = String.join("", Collections.nCopies(501, "n"));
-        OppgaveBuilder builder = getBuilderWithDefaultValues().withTekst(tooLongTekst);
+        BeskjedBuilder builder = getBuilderWithDefaultValues().withTekst(tooLongTekst);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("tekst"));
     }
 
     @Test
     void skalIkkeGodtaTomTekst() {
-        OppgaveBuilder builder = getBuilderWithDefaultValues().withTekst("");
+        BeskjedBuilder builder = getBuilderWithDefaultValues().withTekst("");
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("tekst"));
     }
 
     @Test
     void skalIkkeGodtaManglendeEventtidspunkt() {
-        OppgaveBuilder builder = getBuilderWithDefaultValues().withTidspunkt(null);
+        BeskjedBuilder builder = getBuilderWithDefaultValues().withTidspunkt(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("tidspunkt"));
     }
 
-    private OppgaveBuilder getBuilderWithDefaultValues() {
-        return new OppgaveBuilder()
+    @Test
+    void skalGodtaMangledeSynligFremTil() {
+        BeskjedBuilder builder = getBuilderWithDefaultValues().withSynligFremTil(null);
+        Assertions.assertDoesNotThrow(() -> builder.build());
+    }
+
+    private BeskjedBuilder getBuilderWithDefaultValues() {
+        return new BeskjedBuilder()
                 .withFodselsnummer(expectedFodselsnr)
                 .withGrupperingsId(expectedGrupperingsId)
                 .withSikkerhetsnivaa(expectedSikkerhetsnivaa)
                 .withLink(expectedLink)
                 .withTekst(expectedTekst)
-                .withTidspunkt(expectedTidspunkt);
+                .withTidspunkt(expectedTidspunkt)
+                .withSynligFremTil(expectedSynligFremTil);
     }
 }

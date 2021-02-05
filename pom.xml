@@ -3,13 +3,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>no.nav</groupId>
-    <artifactId>brukernotifikasjon-schemas</artifactId>
+    <artifactId>brukernotifikasjon-schemas-internal</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>brukernotifikasjon-schemas</name>
+    <name>brukernotifikasjon-schemas-internal</name>
     <description>Definitions for events in Ditt NAV</description>
-    <url>https://github.com/navikt/brukernotifikasjon-schemas</url>
+    <url>https://github.com/navikt/brukernotifikasjon-schemas-internal</url>
 
     <licenses>
         <license>
@@ -27,9 +27,9 @@
     </developers>
 
     <scm>
-        <developerConnection>scm:git:git@github.com:navikt/brukernotifikasjon-schemas.git</developerConnection>
-        <connection>scm:git:git@github.com:navikt/brukernotifikasjon-schemas.git</connection>
-        <url>https://github.com/navikt/brukernotifikasjon-schemas</url>
+        <developerConnection>scm:git:git@github.com:navikt/brukernotifikasjon-schemas-internal.git</developerConnection>
+        <connection>scm:git:git@github.com:navikt/brukernotifikasjon-schemas-internal.git</connection>
+        <url>https://github.com/navikt/brukernotifikasjon-schemas-internal</url>
         <tag>HEAD</tag>
     </scm>
 

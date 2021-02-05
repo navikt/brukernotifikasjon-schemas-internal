@@ -1,9 +1,9 @@
-package no.nav.brukernotifikasjon.schemas.builders.util;
+package no.nav.brukernotifikasjon.schemas.internal.builders.util;
 
-import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
-import no.nav.brukernotifikasjon.schemas.builders.domain.StatusGlobal;
-import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
-import no.nav.brukernotifikasjon.schemas.builders.exception.UnknownEventtypeException;
+import no.nav.brukernotifikasjon.schemas.internal.builders.domain.Eventtype;
+import no.nav.brukernotifikasjon.schemas.internal.builders.domain.StatusGlobal;
+import no.nav.brukernotifikasjon.schemas.internal.builders.exception.FieldValidationException;
+import no.nav.brukernotifikasjon.schemas.internal.builders.exception.UnknownEventtypeException;
 
 import java.net.URL;
 import java.time.LocalDateTime;

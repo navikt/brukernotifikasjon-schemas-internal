@@ -1,13 +1,13 @@
-package no.nav.brukernotifikasjon.schemas.builders.exception;
+package no.nav.brukernotifikasjon.schemas.internal.builders.exception;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class UnknownEventtypeException extends RuntimeException {
+public class FieldValidationException extends RuntimeException {
 
     private Map<String, Object> context = new HashMap<>();
 
-    public UnknownEventtypeException(String message) {
+    public FieldValidationException(String message) {
         super(message);
     }
 

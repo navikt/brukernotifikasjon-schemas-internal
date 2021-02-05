@@ -1,7 +1,7 @@
-package no.nav.brukernotifikasjon.schemas.builders;
+package no.nav.brukernotifikasjon.schemas.internal.builders;
 
 import no.nav.brukernotifikasjon.schemas.Done;
-import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
+import no.nav.brukernotifikasjon.schemas.internal.builders.exception.FieldValidationException;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;

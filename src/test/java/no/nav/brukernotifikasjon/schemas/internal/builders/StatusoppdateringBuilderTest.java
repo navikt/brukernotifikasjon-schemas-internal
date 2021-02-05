@@ -1,8 +1,8 @@
-package no.nav.brukernotifikasjon.schemas.builders;
+package no.nav.brukernotifikasjon.schemas.internal.builders;
 
 import no.nav.brukernotifikasjon.schemas.Statusoppdatering;
-import no.nav.brukernotifikasjon.schemas.builders.domain.StatusGlobal;
-import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
+import no.nav.brukernotifikasjon.schemas.internal.builders.domain.StatusGlobal;
+import no.nav.brukernotifikasjon.schemas.internal.builders.exception.FieldValidationException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;

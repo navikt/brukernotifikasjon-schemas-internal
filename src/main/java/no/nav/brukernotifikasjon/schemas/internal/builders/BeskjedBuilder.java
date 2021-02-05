@@ -1,8 +1,8 @@
-package no.nav.brukernotifikasjon.schemas.builders;
+package no.nav.brukernotifikasjon.schemas.internal.builders;
 
 import no.nav.brukernotifikasjon.schemas.Beskjed;
-import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
-import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
+import no.nav.brukernotifikasjon.schemas.internal.builders.domain.Eventtype;
+import no.nav.brukernotifikasjon.schemas.internal.builders.util.ValidationUtil;
 
 import java.net.URL;
 import java.time.LocalDateTime;

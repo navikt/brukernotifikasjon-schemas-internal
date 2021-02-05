@@ -1,7 +1,7 @@
-package no.nav.brukernotifikasjon.schemas.builders;
+package no.nav.brukernotifikasjon.schemas.internal.builders;
 
 import no.nav.brukernotifikasjon.schemas.Nokkel;
-import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
+import no.nav.brukernotifikasjon.schemas.internal.builders.util.ValidationUtil;
 
 public class NokkelBuilder {
 
