@@ -1,7 +1,7 @@
 {
     "type": "record",
-    "namespace": "no.nav.brukernotifikasjon.schemas",
-    "name": "Beskjed",
+    "namespace": "no.nav.brukernotifikasjon.schemas.internal",
+    "name": "BeskjedInternal",
     "fields": [
         {
             "name": "tidspunkt",
