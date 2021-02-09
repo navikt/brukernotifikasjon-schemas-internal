@@ -1,12 +1,18 @@
 {
     "type": "record",
     "namespace": "no.nav.brukernotifikasjon.schemas.internal",
-    "name": "OppgaveInternal",
+    "name": "BeskjedIntern",
     "fields": [
         {
             "name": "tidspunkt",
             "type": "long",
             "logicalType": "timestamp-millis"
+        },
+        {
+            "name": "synligFremTil",
+            "type": ["null", "long"],
+            "logicalType": "timestamp-millis",
+            "default": null
         },
         {
             "name": "grupperingsId",

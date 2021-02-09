@@ -1,7 +1,7 @@
 {
     "type": "record",
     "namespace": "no.nav.brukernotifikasjon.schemas.internal",
-    "name": "InnboksInternal",
+    "name": "DoneIntern",
     "fields": [
         {
             "name": "tidspunkt",
@@ -11,19 +11,6 @@
         {
             "name": "grupperingsId",
             "type": "string"
-        },
-        {
-            "name": "tekst",
-            "type": "string"
-        },
-        {
-            "name": "link",
-            "type": "string"
-        },
-        {
-            "name": "sikkerhetsnivaa",
-            "type": "int",
-            "default": 4
         }
     ]
 }

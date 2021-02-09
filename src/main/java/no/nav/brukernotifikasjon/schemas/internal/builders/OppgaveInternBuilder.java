@@ -1,13 +1,13 @@
 package no.nav.brukernotifikasjon.schemas.internal.builders;
 
-import no.nav.brukernotifikasjon.schemas.Oppgave;
+import no.nav.brukernotifikasjon.schemas.internal.OppgaveIntern;
 import no.nav.brukernotifikasjon.schemas.internal.builders.domain.Eventtype;
 import no.nav.brukernotifikasjon.schemas.internal.builders.util.ValidationUtil;
 
 import java.net.URL;
 import java.time.LocalDateTime;
 
-public class OppgaveInternalBuilder {
+public class OppgaveInternBuilder {
 
     private LocalDateTime tidspunkt;
     private String grupperingsId;
@@ -16,38 +16,38 @@ public class OppgaveInternalBuilder {
     private Integer sikkerhetsnivaa;
     private Boolean eksternVarsling = false;
 
-    public OppgaveInternalBuilder withTidspunkt(LocalDateTime tidspunkt) {
+    public OppgaveInternBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
         return this;
     }
 
-    public OppgaveInternalBuilder withGrupperingsId(String grupperingsId) {
+    public OppgaveInternBuilder withGrupperingsId(String grupperingsId) {
         this.grupperingsId = grupperingsId;
         return this;
     }
 
-    public OppgaveInternalBuilder withTekst(String tekst) {
+    public OppgaveInternBuilder withTekst(String tekst) {
         this.tekst = tekst;
         return this;
     }
 
-    public OppgaveInternalBuilder withLink(URL link) {
+    public OppgaveInternBuilder withLink(URL link) {
         this.link = link;
         return this;
     }
 
-    public OppgaveInternalBuilder withSikkerhetsnivaa(Integer sikkerhetsnivaa) {
+    public OppgaveInternBuilder withSikkerhetsnivaa(Integer sikkerhetsnivaa) {
         this.sikkerhetsnivaa = sikkerhetsnivaa;
         return this;
     }
 
-    public OppgaveInternalBuilder withEksternVarsling(Boolean eksternVarsling) {
+    public OppgaveInternBuilder withEksternVarsling(Boolean eksternVarsling) {
         this.eksternVarsling = eksternVarsling;
         return this;
     }
 
-    public Oppgave build() {
-        return new OppgaveInternal(
+    public OppgaveIntern build() {
+        return new OppgaveIntern(
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
                 ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", ValidationUtil.MAX_LENGTH_GRUPPERINGSID),
                 ValidationUtil.validateNonNullFieldMaxLength(tekst, "tekst", ValidationUtil.MAX_LENGTH_TEXT_OPPGAVE),

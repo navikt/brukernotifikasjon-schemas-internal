@@ -1,7 +1,7 @@
 {
     "type": "record",
     "namespace": "no.nav.brukernotifikasjon.schemas.internal",
-    "name": "NokkelInternal",
+    "name": "NokkelIntern",
     "fields": [
         {
             "name": "systembruker",

@@ -1,6 +1,6 @@
 package no.nav.brukernotifikasjon.schemas.internal.builders;
 
-import no.nav.brukernotifikasjon.schemas.Statusoppdatering;
+import no.nav.brukernotifikasjon.schemas.internal.StatusoppdateringIntern;
 import no.nav.brukernotifikasjon.schemas.internal.builders.domain.StatusGlobal;
 import org.junit.jupiter.api.Test;
 
@@ -11,24 +11,24 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class StatusoppdateringAvroTest {
+public class StatusoppdateringInternAvroTest {
 
     private int expectedSikkerhetsnivaa = 4;
 
     @Test
     void skalSetteDefaultverdiForSikkerhetsnivaa() {
-        Statusoppdatering statusoppdatering = getStatusoppdateringWithDefaultValues();
+        StatusoppdateringIntern statusoppdatering = getStatusoppdateringWithDefaultValues();
         assertThat(statusoppdatering.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
     }
 
     @Test
     void skalSetteNullSomDefaultverdiForStatusIntern() {
-        Statusoppdatering statusoppdatering = getStatusoppdateringWithDefaultValues();
+        StatusoppdateringIntern statusoppdatering = getStatusoppdateringWithDefaultValues();
         assertThat(statusoppdatering.getStatusIntern(), is(nullValue()));
     }
 
-    private Statusoppdatering getStatusoppdateringWithDefaultValues() {
-        return Statusoppdatering.newBuilder()
+    private StatusoppdateringIntern getStatusoppdateringWithDefaultValues() {
+        return StatusoppdateringIntern.newBuilder()
                 .setTidspunkt(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC))
                 .setGrupperingsId("3456789123456")
                 .setLink("https://gyldig.url")

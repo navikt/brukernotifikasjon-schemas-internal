@@ -1,27 +1,27 @@
 package no.nav.brukernotifikasjon.schemas.internal.builders;
 
-import no.nav.brukernotifikasjon.schemas.Done;
+import no.nav.brukernotifikasjon.schemas.internal.DoneIntern;
 import no.nav.brukernotifikasjon.schemas.internal.builders.util.ValidationUtil;
 
 import java.time.LocalDateTime;
 
-public class DoneInternalBuilder {
+public class DoneInternBuilder {
 
     private LocalDateTime tidspunkt;
     private String grupperingsId;
 
-    public DoneInternalBuilder withTidspunkt(LocalDateTime tidspunkt) {
+    public DoneInternBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
         return this;
     }
 
-    public DoneInternalBuilder withGrupperingsId(String grupperingsId) {
+    public DoneInternBuilder withGrupperingsId(String grupperingsId) {
         this.grupperingsId = grupperingsId;
         return this;
     }
 
-    public Done build() {
-        return new DoneInternal(
+    public DoneIntern build() {
+        return new DoneIntern(
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
                 ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", ValidationUtil.MAX_LENGTH_GRUPPERINGSID)
         );
