@@ -14,45 +14,45 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class DoneBuilderTest {
+public class DoneInternalBuilderTest {
 
     private String expectedGrupperingsId = "3456789123456";
     private LocalDateTime expectedTidspunkt = LocalDateTime.now(ZoneId.of("UTC"));
 
     @Test
     void skalGodtaEventerMedGyldigeFeltverdier() {
-        DoneBuilder builder = getBuilderWithDefaultValues();
-        Done done = builder.build();
+        DoneInternalBuilder builder = getBuilderWithDefaultValues();
+        DoneInternal doneInternal = builder.build();
 
-        assertThat(done.getGrupperingsId(), is(expectedGrupperingsId));
+        assertThat(doneInternal.getGrupperingsId(), is(expectedGrupperingsId));
         long expectedTidspunktAsUtcLong = expectedTidspunkt.toInstant(ZoneOffset.UTC).toEpochMilli();
-        assertThat(done.getTidspunkt(), is(expectedTidspunktAsUtcLong));
+        assertThat(doneInternal.getTidspunkt(), is(expectedTidspunktAsUtcLong));
     }
 
     @Test
     void skalIkkeGodtaForLangGrupperingsId() {
         String tooLongGrupperingsId = String.join("", Collections.nCopies(101, "1"));
-        DoneBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(tooLongGrupperingsId);
+        DoneInternalBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(tooLongGrupperingsId);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
     }
 
     @Test
     void skalIkkeGodtaManglendeGrupperingsId() {
-        DoneBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(null);
+        DoneInternalBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
     }
 
     @Test
     void skalIkkeGodtaManglendeEventtidspunkt() {
-        DoneBuilder builder = getBuilderWithDefaultValues().withTidspunkt(null);
+        DoneInternalBuilder builder = getBuilderWithDefaultValues().withTidspunkt(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("tidspunkt"));
     }
 
-    private DoneBuilder getBuilderWithDefaultValues() {
-        return new DoneBuilder()
+    private DoneInternalBuilder getBuilderWithDefaultValues() {
+        return new DoneInternalBuilder()
                 .withGrupperingsId(expectedGrupperingsId)
                 .withTidspunkt(expectedTidspunkt);
     }

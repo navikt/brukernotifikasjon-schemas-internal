@@ -18,7 +18,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class OppgaveBuilderTest {
+class OppgaveInternalBuilderTest {
 
     private String expectedGrupperingsId;
     private int expectedSikkerhetsnivaa;
@@ -39,29 +39,29 @@ class OppgaveBuilderTest {
 
     @Test
     void skalGodtaEventerMedGyldigeFeltverdier() {
-        OppgaveBuilder builder = getBuilderWithDefaultValues();
-        Oppgave oppgave = builder.build();
+        OppgaveInternalBuilder builder = getBuilderWithDefaultValues();
+        OppgaveInternal oppgaveInternal = builder.build();
 
-        assertThat(oppgave.getGrupperingsId(), is(expectedGrupperingsId));
-        assertThat(oppgave.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
-        assertThat(oppgave.getLink(), is(expectedLink.toString()));
-        assertThat(oppgave.getTekst(), is(expectedTekst));
+        assertThat(oppgaveInternal.getGrupperingsId(), is(expectedGrupperingsId));
+        assertThat(oppgaveInternal.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
+        assertThat(oppgaveInternal.getLink(), is(expectedLink.toString()));
+        assertThat(oppgaveInternal.getTekst(), is(expectedTekst));
         long expectedTidspunktAsUtcLong = expectedTidspunkt.toInstant(ZoneOffset.UTC).toEpochMilli();
-        assertThat(oppgave.getTidspunkt(), is(expectedTidspunktAsUtcLong));
-        assertThat(oppgave.getEksternVarsling(), is(eksternVarsling));
+        assertThat(oppgaveInternal.getTidspunkt(), is(expectedTidspunktAsUtcLong));
+        assertThat(oppgaveInternal.getEksternVarsling(), is(eksternVarsling));
     }
 
     @Test
     void skalIkkeGodtaForLangGrupperingsId() {
         String tooLongGrupperingsId = String.join("", Collections.nCopies(101, "1"));
-        OppgaveBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(tooLongGrupperingsId);
+        OppgaveInternalBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(tooLongGrupperingsId);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
     }
 
     @Test
     void skalIkkeGodtaManglendeGrupperingsId() {
-        OppgaveBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(null);
+        OppgaveInternalBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
     }
@@ -69,7 +69,7 @@ class OppgaveBuilderTest {
     @Test
     void skalIkkeGodtaForLavtSikkerhetsnivaa() {
         int invalidSikkerhetsnivaa = 2;
-        OppgaveBuilder builder = getBuilderWithDefaultValues().withSikkerhetsnivaa(invalidSikkerhetsnivaa);
+        OppgaveInternalBuilder builder = getBuilderWithDefaultValues().withSikkerhetsnivaa(invalidSikkerhetsnivaa);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("Sikkerhetsnivaa"));
     }
@@ -77,14 +77,14 @@ class OppgaveBuilderTest {
     @Test
     void skalIkkeGodtaForLangLink() throws MalformedURLException {
         URL invalidLink = new URL("https://" + String.join("", Collections.nCopies(201, "n")));
-        OppgaveBuilder builder = getBuilderWithDefaultValues().withLink(invalidLink);
+        OppgaveInternalBuilder builder = getBuilderWithDefaultValues().withLink(invalidLink);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("link"));
     }
 
     @Test
     void skalIkkeGodtaManglendeLink() {
-        OppgaveBuilder builder = getBuilderWithDefaultValues().withLink(null);
+        OppgaveInternalBuilder builder = getBuilderWithDefaultValues().withLink(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("link"));
     }
@@ -92,27 +92,27 @@ class OppgaveBuilderTest {
     @Test
     void skalIkkeGodtaForLangTekst() {
         String tooLongTekst = String.join("", Collections.nCopies(501, "n"));
-        OppgaveBuilder builder = getBuilderWithDefaultValues().withTekst(tooLongTekst);
+        OppgaveInternalBuilder builder = getBuilderWithDefaultValues().withTekst(tooLongTekst);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("tekst"));
     }
 
     @Test
     void skalIkkeGodtaTomTekst() {
-        OppgaveBuilder builder = getBuilderWithDefaultValues().withTekst("");
+        OppgaveInternalBuilder builder = getBuilderWithDefaultValues().withTekst("");
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("tekst"));
     }
 
     @Test
     void skalIkkeGodtaManglendeEventtidspunkt() {
-        OppgaveBuilder builder = getBuilderWithDefaultValues().withTidspunkt(null);
+        OppgaveInternalBuilder builder = getBuilderWithDefaultValues().withTidspunkt(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("tidspunkt"));
     }
 
-    private OppgaveBuilder getBuilderWithDefaultValues() {
-        return new OppgaveBuilder()
+    private OppgaveInternalBuilder getBuilderWithDefaultValues() {
+        return new OppgaveInternalBuilder()
                 .withGrupperingsId(expectedGrupperingsId)
                 .withSikkerhetsnivaa(expectedSikkerhetsnivaa)
                 .withLink(expectedLink)

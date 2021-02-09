@@ -7,7 +7,7 @@ import no.nav.brukernotifikasjon.schemas.internal.builders.util.ValidationUtil;
 import java.net.URL;
 import java.time.LocalDateTime;
 
-public class BeskjedBuilder {
+public class BeskjedInternalBuilder {
 
     private LocalDateTime tidspunkt;
     private LocalDateTime synligFremTil;
@@ -17,43 +17,43 @@ public class BeskjedBuilder {
     private Integer sikkerhetsnivaa;
     private Boolean eksternVarsling = false;
 
-    public BeskjedBuilder withTidspunkt(LocalDateTime tidspunkt) {
+    public BeskjedInternalBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
         return this;
     }
 
-    public BeskjedBuilder withSynligFremTil(LocalDateTime synligFremTil) {
+    public BeskjedInternalBuilder withSynligFremTil(LocalDateTime synligFremTil) {
         this.synligFremTil = synligFremTil;
         return this;
     }
 
-    public BeskjedBuilder withGrupperingsId(String grupperingsId) {
+    public BeskjedInternalBuilder withGrupperingsId(String grupperingsId) {
         this.grupperingsId = grupperingsId;
         return this;
     }
 
-    public BeskjedBuilder withTekst(String tekst) {
+    public BeskjedInternalBuilder withTekst(String tekst) {
         this.tekst = tekst;
         return this;
     }
 
-    public BeskjedBuilder withLink(URL link) {
+    public BeskjedInternalBuilder withLink(URL link) {
         this.link = link;
         return this;
     }
 
-    public BeskjedBuilder withSikkerhetsnivaa(Integer sikkerhetsnivaa) {
+    public BeskjedInternalBuilder withSikkerhetsnivaa(Integer sikkerhetsnivaa) {
         this.sikkerhetsnivaa = sikkerhetsnivaa;
         return this;
     }
 
-    public BeskjedBuilder withEksternVarsling(Boolean eksternVarsling) {
+    public BeskjedInternalBuilder withEksternVarsling(Boolean eksternVarsling) {
         this.eksternVarsling = eksternVarsling;
         return this;
     }
 
     public Beskjed build() {
-        return new Beskjed(
+        return new BeskjedInternal(
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
                 ValidationUtil.localDateTimeToUtcTimestamp(synligFremTil, "synligFremTil", ValidationUtil.IS_REQUIRED_SYNLIGFREMTIL),
                 ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", ValidationUtil.MAX_LENGTH_GRUPPERINGSID),

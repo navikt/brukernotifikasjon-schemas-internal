@@ -7,7 +7,7 @@ import no.nav.brukernotifikasjon.schemas.internal.builders.util.ValidationUtil;
 import java.net.URL;
 import java.time.LocalDateTime;
 
-public class OppgaveBuilder {
+public class OppgaveInternalBuilder {
 
     private LocalDateTime tidspunkt;
     private String grupperingsId;
@@ -16,38 +16,38 @@ public class OppgaveBuilder {
     private Integer sikkerhetsnivaa;
     private Boolean eksternVarsling = false;
 
-    public OppgaveBuilder withTidspunkt(LocalDateTime tidspunkt) {
+    public OppgaveInternalBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
         return this;
     }
 
-    public OppgaveBuilder withGrupperingsId(String grupperingsId) {
+    public OppgaveInternalBuilder withGrupperingsId(String grupperingsId) {
         this.grupperingsId = grupperingsId;
         return this;
     }
 
-    public OppgaveBuilder withTekst(String tekst) {
+    public OppgaveInternalBuilder withTekst(String tekst) {
         this.tekst = tekst;
         return this;
     }
 
-    public OppgaveBuilder withLink(URL link) {
+    public OppgaveInternalBuilder withLink(URL link) {
         this.link = link;
         return this;
     }
 
-    public OppgaveBuilder withSikkerhetsnivaa(Integer sikkerhetsnivaa) {
+    public OppgaveInternalBuilder withSikkerhetsnivaa(Integer sikkerhetsnivaa) {
         this.sikkerhetsnivaa = sikkerhetsnivaa;
         return this;
     }
 
-    public OppgaveBuilder withEksternVarsling(Boolean eksternVarsling) {
+    public OppgaveInternalBuilder withEksternVarsling(Boolean eksternVarsling) {
         this.eksternVarsling = eksternVarsling;
         return this;
     }
 
     public Oppgave build() {
-        return new Oppgave(
+        return new OppgaveInternal(
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
                 ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", ValidationUtil.MAX_LENGTH_GRUPPERINGSID),
                 ValidationUtil.validateNonNullFieldMaxLength(tekst, "tekst", ValidationUtil.MAX_LENGTH_TEXT_OPPGAVE),

@@ -3,35 +3,35 @@ package no.nav.brukernotifikasjon.schemas.internal.builders;
 import no.nav.brukernotifikasjon.schemas.Nokkel;
 import no.nav.brukernotifikasjon.schemas.internal.builders.util.ValidationUtil;
 
-public class NokkelBuilder {
+public class NokkelInternalBuilder {
 
     private String systembruker;
     private String eventId;
     private String fodselsnummer;
     private String ulid;
 
-    public NokkelBuilder withSystembruker(String systembruker) {
+    public NokkelInternalBuilder withSystembruker(String systembruker) {
         this.systembruker = systembruker;
         return this;
     }
 
-    public NokkelBuilder withEventId(String eventId) {
+    public NokkelInternalBuilder withEventId(String eventId) {
         this.eventId = eventId;
         return this;
     }
 
-    public NokkelBuilder withFodselsnummer(String fodselsnummer) {
+    public NokkelInternalBuilder withFodselsnummer(String fodselsnummer) {
         this.fodselsnummer = fodselsnummer;
         return this;
     }
 
-    public NokkelBuilder withUlid(String ulid) {
+    public NokkelInternalBuilder withUlid(String ulid) {
         this.ulid;
         return this;
     }
 
     public Nokkel build() {
-        return new Nokkel(
+        return new NokkelInternal(
                 ValidationUtil.validateNonNullFieldMaxLength(systembruker, "systembruker", ValidationUtil.MAX_LENGTH_SYSTEMBRUKER),
                 ValidationUtil.validateNonNullFieldMaxLength(eventId, "eventId", ValidationUtil.MAX_LENGTH_EVENTID),
                 ValidationUtil.validateFodselsnummer(fodselsnummer),

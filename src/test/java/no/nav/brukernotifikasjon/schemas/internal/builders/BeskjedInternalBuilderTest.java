@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class BeskjedBuilderTest {
+public class BeskjedInternalBuilderTest {
 
     private String expectedGrupperingsId;
     private int expectedSikkerhetsnivaa;
@@ -44,31 +44,31 @@ public class BeskjedBuilderTest {
 
     @Test
     void skalGodtaEventerMedGyldigeFeltverdier() {
-        BeskjedBuilder builder = getBuilderWithDefaultValues();
-        Beskjed beskjed = builder.build();
+        BeskjedInternalBuilder builder = getBuilderWithDefaultValues();
+        BeskjedInternal beskjedInternal = builder.build();
 
-        assertThat(beskjed.getGrupperingsId(), is(expectedGrupperingsId));
-        assertThat(beskjed.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
-        assertThat(beskjed.getLink(), is(expectedLink.toString()));
-        assertThat(beskjed.getTekst(), is(expectedTekst));
+        assertThat(beskjedInternal.getGrupperingsId(), is(expectedGrupperingsId));
+        assertThat(beskjedInternal.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
+        assertThat(beskjedInternal.getLink(), is(expectedLink.toString()));
+        assertThat(beskjedInternal.getTekst(), is(expectedTekst));
         long expectedTidspunktAsUtcLong = expectedTidspunkt.toInstant(ZoneOffset.UTC).toEpochMilli();
-        assertThat(beskjed.getTidspunkt(), is(expectedTidspunktAsUtcLong));
+        assertThat(beskjedInternal.getTidspunkt(), is(expectedTidspunktAsUtcLong));
         long expectedSynligFremTilAsUtcLong = expectedSynligFremTil.toInstant(ZoneOffset.UTC).toEpochMilli();
-        assertThat(beskjed.getSynligFremTil(), is(expectedSynligFremTilAsUtcLong));
-        assertThat(beskjed.getEksternVarsling(), is(expectedEksternVarsling));
+        assertThat(beskjedInternal.getSynligFremTil(), is(expectedSynligFremTilAsUtcLong));
+        assertThat(beskjedInternal.getEksternVarsling(), is(expectedEksternVarsling));
     }
 
     @Test
     void skalIkkeGodtaForLangGrupperingsId() {
         String tooLongGrupperingsId = String.join("", Collections.nCopies(101, "1"));
-        BeskjedBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(tooLongGrupperingsId);
+        BeskjedInternalBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(tooLongGrupperingsId);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
     }
 
     @Test
     void skalIkkeGodtaManglendeGrupperingsId() {
-        BeskjedBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(null);
+        BeskjedInternalBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
     }
@@ -76,7 +76,7 @@ public class BeskjedBuilderTest {
     @Test
     void skalIkkeGodtaForLavtSikkerhetsnivaa() {
         int invalidSikkerhetsnivaa = 2;
-        BeskjedBuilder builder = getBuilderWithDefaultValues().withSikkerhetsnivaa(invalidSikkerhetsnivaa);
+        BeskjedInternalBuilder builder = getBuilderWithDefaultValues().withSikkerhetsnivaa(invalidSikkerhetsnivaa);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("Sikkerhetsnivaa"));
     }
@@ -84,47 +84,47 @@ public class BeskjedBuilderTest {
     @Test
     void skalIkkeGodtaForLangLink() throws MalformedURLException {
         URL invalidLink = new URL("https://" + String.join("", Collections.nCopies(201, "n")));
-        BeskjedBuilder builder = getBuilderWithDefaultValues().withLink(invalidLink);
+        BeskjedInternalBuilder builder = getBuilderWithDefaultValues().withLink(invalidLink);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("link"));
     }
 
     @Test
     void skalGodtaManglendeLink() {
-        BeskjedBuilder builder = getBuilderWithDefaultValues().withLink(null);
+        BeskjedInternalBuilder builder = getBuilderWithDefaultValues().withLink(null);
         Assertions.assertDoesNotThrow(() -> builder.build());
     }
 
     @Test
     void skalIkkeGodtaForLangTekst() {
         String tooLongTekst = String.join("", Collections.nCopies(501, "n"));
-        BeskjedBuilder builder = getBuilderWithDefaultValues().withTekst(tooLongTekst);
+        BeskjedInternalBuilder builder = getBuilderWithDefaultValues().withTekst(tooLongTekst);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("tekst"));
     }
 
     @Test
     void skalIkkeGodtaTomTekst() {
-        BeskjedBuilder builder = getBuilderWithDefaultValues().withTekst("");
+        BeskjedInternalBuilder builder = getBuilderWithDefaultValues().withTekst("");
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("tekst"));
     }
 
     @Test
     void skalIkkeGodtaManglendeEventtidspunkt() {
-        BeskjedBuilder builder = getBuilderWithDefaultValues().withTidspunkt(null);
+        BeskjedInternalBuilder builder = getBuilderWithDefaultValues().withTidspunkt(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("tidspunkt"));
     }
 
     @Test
     void skalGodtaMangledeSynligFremTil() {
-        BeskjedBuilder builder = getBuilderWithDefaultValues().withSynligFremTil(null);
+        BeskjedInternalBuilder builder = getBuilderWithDefaultValues().withSynligFremTil(null);
         Assertions.assertDoesNotThrow(() -> builder.build());
     }
 
-    private BeskjedBuilder getBuilderWithDefaultValues() {
-        return new BeskjedBuilder()
+    private BeskjedInternalBuilder getBuilderWithDefaultValues() {
+        return new BeskjedInternalBuilder()
                 .withGrupperingsId(expectedGrupperingsId)
                 .withSikkerhetsnivaa(expectedSikkerhetsnivaa)
                 .withLink(expectedLink)
