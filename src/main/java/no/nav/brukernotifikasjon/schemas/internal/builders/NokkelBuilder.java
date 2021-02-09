@@ -8,6 +8,7 @@ public class NokkelBuilder {
     private String systembruker;
     private String eventId;
     private String fodselsnummer;
+    private String ulid;
 
     public NokkelBuilder withSystembruker(String systembruker) {
         this.systembruker = systembruker;
@@ -19,8 +20,13 @@ public class NokkelBuilder {
         return this;
     }
 
-    public BeskjedBuilder withFodselsnummer(String fodselsnummer) {
+    public NokkelBuilder withFodselsnummer(String fodselsnummer) {
         this.fodselsnummer = fodselsnummer;
+        return this;
+    }
+
+    public NokkelBuilder withUlid(String ulid) {
+        this.ulid;
         return this;
     }
 
@@ -28,7 +34,8 @@ public class NokkelBuilder {
         return new Nokkel(
                 ValidationUtil.validateNonNullFieldMaxLength(systembruker, "systembruker", ValidationUtil.MAX_LENGTH_SYSTEMBRUKER),
                 ValidationUtil.validateNonNullFieldMaxLength(eventId, "eventId", ValidationUtil.MAX_LENGTH_EVENTID),
-                ValidationUtil.validateFodselsnummer(fodselsnummer)
+                ValidationUtil.validateFodselsnummer(fodselsnummer),
+                ValidationUtil.validateNonNullFieldMaxLength(ulid, "ulid", ValidationUtil.MAX_LENGTH_ULID)
                 );
     }
 }

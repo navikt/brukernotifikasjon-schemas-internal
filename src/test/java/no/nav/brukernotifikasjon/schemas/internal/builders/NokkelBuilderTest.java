@@ -16,7 +16,8 @@ public class NokkelBuilderTest {
 
     private String expectedSystembruker = "enSystemBruker";
     private String expectedEventID = UUID.randomUUID().toString();
-    private String expectedFodselsnr = "12345678901";;
+    private String expectedFodselsnr = "12345678901";
+    private String expectedUlid = "12345";
 
     @Test
     void skalGodtaEventerMedGyldigeFeltverdier() {
@@ -26,12 +27,20 @@ public class NokkelBuilderTest {
         assertThat(nokkel.getSystembruker(), is(expectedSystembruker));
         assertThat(nokkel.getEventId(), is(expectedEventID));
         assertThat(nokkel.getFodselsnummer(), is(expectedFodselsnr));
+        assertThat(nokkel.getUlid(), is(expectedUlid));
     }
 
     @Test
     void skalIkkeGodtaForLangSystembruker() {
         String tooLongSystembruker = String.join("", Collections.nCopies(101, "n"));
         NokkelBuilder builder = getBuilderWithDefaultValues().withSystembruker(tooLongSystembruker);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("systembruker"));
+    }
+
+    @Test
+    void skalIkkeGodtaManglendeSystembruker() {
+        NokkelBuilder builder = getBuilderWithDefaultValues().withSystembruker(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("systembruker"));
     }
@@ -45,24 +54,33 @@ public class NokkelBuilderTest {
     }
 
     @Test
-    void skalIkkeGodtaManglendeSystembruker() {
-        NokkelBuilder builder = getBuilderWithDefaultValues().withSystembruker(null);
-        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
-        assertThat(exceptionThrown.getMessage(), containsString("systembruker"));
-    }
-
-    @Test
     void skalIkkeGodtaManglendeFodselsnummer() {
         NokkelBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("fodselsnummer"));
     }
 
+    @Test
+    void skalIkkeGodtaUgyldigUlid() {
+        String tooLongUlid = String.join("", Collections.nCopies(101, "n"));
+        NokkelBuilder builder = getBuilderWithDefaultValues().withUlid(tooLongUlid);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("ulid"));
+    }
+
+    @Test
+    void skalIkkeGodtaManglendeUlid() {
+        NokkelBuilder builder = getBuilderWithDefaultValues().withUlid(null);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("ulid"));
+    }
+
     private NokkelBuilder getBuilderWithDefaultValues() {
         return new NokkelBuilder()
                 .withSystembruker(expectedSystembruker)
                 .withEventId(expectedEventID)
-                .withFodselsnummer(expectedFodselsnr);
+                .withFodselsnummer(expectedFodselsnr)
+                .withUlid(expectedUlid);
     }
 
 }

@@ -23,6 +23,7 @@ public class ValidationUtil {
     public static final int MAX_LENGTH_SAKSTEMA = 50;
     public static final int MAX_LENGTH_FODSELSNUMMER = 11;
     public static final int MAX_LENGTH_UID = 100;
+    public static final int MAX_LENGTH_ULID = 100;
     public static final boolean IS_REQUIRED_TIDSPUNKT = true;
     public static final boolean IS_REQUIRED_SYNLIGFREMTIL = false;
 
