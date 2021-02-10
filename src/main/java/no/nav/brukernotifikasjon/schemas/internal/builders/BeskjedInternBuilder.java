@@ -16,6 +16,12 @@ public class BeskjedInternBuilder {
     private URL link;
     private Integer sikkerhetsnivaa;
     private Boolean eksternVarsling = false;
+    private String ulid;
+
+    public BeskjedInternBuilder withUlid(String ulid) {
+        this.ulid = ulid;
+        return this;
+    }
 
     public BeskjedInternBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
@@ -54,6 +60,7 @@ public class BeskjedInternBuilder {
 
     public BeskjedIntern build() {
         return new BeskjedIntern(
+                ValidationUtil.validateNonNullFieldMaxLength(ulid, "ulid", ValidationUtil.MAX_LENGTH_ULID),
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
                 ValidationUtil.localDateTimeToUtcTimestamp(synligFremTil, "synligFremTil", ValidationUtil.IS_REQUIRED_SYNLIGFREMTIL),
                 ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", ValidationUtil.MAX_LENGTH_GRUPPERINGSID),

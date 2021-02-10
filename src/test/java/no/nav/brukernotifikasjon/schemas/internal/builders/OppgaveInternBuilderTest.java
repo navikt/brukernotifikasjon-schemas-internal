@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class OppgaveInternBuilderTest {
 
+    private String expectedUlid;
     private String expectedGrupperingsId;
     private int expectedSikkerhetsnivaa;
     private URL expectedLink;
@@ -29,6 +30,7 @@ class OppgaveInternBuilderTest {
 
     @BeforeAll
     void setUp() throws MalformedURLException {
+        expectedUlid = "1x2x3x4x5";
         expectedGrupperingsId = "3456789123456";
         expectedSikkerhetsnivaa = 4;
         expectedLink = new URL("https://gyldig.url");
@@ -49,6 +51,22 @@ class OppgaveInternBuilderTest {
         long expectedTidspunktAsUtcLong = expectedTidspunkt.toInstant(ZoneOffset.UTC).toEpochMilli();
         assertThat(oppgaveIntern.getTidspunkt(), is(expectedTidspunktAsUtcLong));
         assertThat(oppgaveIntern.getEksternVarsling(), is(eksternVarsling));
+        assertThat(oppgaveIntern.getUlid(), is(expectedUlid));
+    }
+
+    @Test
+    void skalIkkeGodtaUgyldigUlid() {
+        String tooLongUlid = String.join("", Collections.nCopies(101, "n"));
+        OppgaveInternBuilder builder = getBuilderWithDefaultValues().withUlid(tooLongUlid);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("ulid"));
+    }
+
+    @Test
+    void skalIkkeGodtaManglendeUlid() {
+        OppgaveInternBuilder builder = getBuilderWithDefaultValues().withUlid(null);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("ulid"));
     }
 
     @Test
@@ -113,6 +131,7 @@ class OppgaveInternBuilderTest {
 
     private OppgaveInternBuilder getBuilderWithDefaultValues() {
         return new OppgaveInternBuilder()
+                .withUlid(expectedUlid)
                 .withGrupperingsId(expectedGrupperingsId)
                 .withSikkerhetsnivaa(expectedSikkerhetsnivaa)
                 .withLink(expectedLink)

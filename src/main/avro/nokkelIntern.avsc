@@ -14,10 +14,6 @@
         {
             "name": "fodselsnummer",
             "type": "string"
-        },
-        {
-            "name": "ulid",
-            "type": "string"
         }
     ]
 }

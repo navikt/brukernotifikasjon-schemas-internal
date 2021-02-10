@@ -15,6 +15,12 @@ public class OppgaveInternBuilder {
     private URL link;
     private Integer sikkerhetsnivaa;
     private Boolean eksternVarsling = false;
+    private String ulid;
+
+    public OppgaveInternBuilder withUlid(String ulid) {
+        this.ulid = ulid;
+        return this;
+    }
 
     public OppgaveInternBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
@@ -48,6 +54,7 @@ public class OppgaveInternBuilder {
 
     public OppgaveIntern build() {
         return new OppgaveIntern(
+                ValidationUtil.validateNonNullFieldMaxLength(ulid, "ulid", ValidationUtil.MAX_LENGTH_ULID),
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
                 ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", ValidationUtil.MAX_LENGTH_GRUPPERINGSID),
                 ValidationUtil.validateNonNullFieldMaxLength(tekst, "tekst", ValidationUtil.MAX_LENGTH_TEXT_OPPGAVE),

@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DoneInternBuilderTest {
 
+    private String expectedUlid = "1x2x3x4x5";
     private String expectedGrupperingsId = "3456789123456";
     private LocalDateTime expectedTidspunkt = LocalDateTime.now(ZoneId.of("UTC"));
 
@@ -27,6 +28,22 @@ public class DoneInternBuilderTest {
         assertThat(doneIntern.getGrupperingsId(), is(expectedGrupperingsId));
         long expectedTidspunktAsUtcLong = expectedTidspunkt.toInstant(ZoneOffset.UTC).toEpochMilli();
         assertThat(doneIntern.getTidspunkt(), is(expectedTidspunktAsUtcLong));
+        assertThat(doneIntern.getUlid(), is(expectedUlid));
+    }
+
+    @Test
+    void skalIkkeGodtaUgyldigUlid() {
+        String tooLongUlid = String.join("", Collections.nCopies(101, "n"));
+        DoneInternBuilder builder = getBuilderWithDefaultValues().withUlid(tooLongUlid);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("ulid"));
+    }
+
+    @Test
+    void skalIkkeGodtaManglendeUlid() {
+        DoneInternBuilder builder = getBuilderWithDefaultValues().withUlid(null);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("ulid"));
     }
 
     @Test
@@ -53,6 +70,7 @@ public class DoneInternBuilderTest {
 
     private DoneInternBuilder getBuilderWithDefaultValues() {
         return new DoneInternBuilder()
+                .withUlid(expectedUlid)
                 .withGrupperingsId(expectedGrupperingsId)
                 .withTidspunkt(expectedTidspunkt);
     }

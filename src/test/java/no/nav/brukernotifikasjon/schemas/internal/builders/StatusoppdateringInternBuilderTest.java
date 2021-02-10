@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class StatusoppdateringInternBuilderTest {
 
+    private String expectedUlid;
     private String expectedGrupperingsId;
     private int expectedSikkerhetsnivaa;
     private URL expectedLink;
@@ -32,6 +33,7 @@ public class StatusoppdateringInternBuilderTest {
 
     @BeforeAll
     void setUp() throws MalformedURLException {
+        expectedUlid = "1x2x3x4x5";
         expectedGrupperingsId = "3456789123456";
         expectedSikkerhetsnivaa = 4;
         expectedLink = new URL("https://gyldig.url");
@@ -54,6 +56,22 @@ public class StatusoppdateringInternBuilderTest {
         assertThat(statusoppdateringIntern.getSakstema(), is(expectedSakstema));
         long expectedTidspunktAsUtcLong = expectedTidspunkt.toInstant(ZoneOffset.UTC).toEpochMilli();
         assertThat(statusoppdateringIntern.getTidspunkt(), is(expectedTidspunktAsUtcLong));
+        assertThat(statusoppdateringIntern.getUlid(), is(expectedUlid));
+    }
+
+    @Test
+    void skalIkkeGodtaUgyldigUlid() {
+        String tooLongUlid = String.join("", Collections.nCopies(101, "n"));
+        StatusoppdateringInternBuilder builder = getBuilderWithDefaultValues().withUlid(tooLongUlid);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("ulid"));
+    }
+
+    @Test
+    void skalIkkeGodtaManglendeUlid() {
+        StatusoppdateringInternBuilder builder = getBuilderWithDefaultValues().withUlid(null);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("ulid"));
     }
 
     @Test
@@ -140,6 +158,7 @@ public class StatusoppdateringInternBuilderTest {
 
     private StatusoppdateringInternBuilder getBuilderWithDefaultValues() {
         return new StatusoppdateringInternBuilder()
+                .withUlid(expectedUlid)
                 .withGrupperingsId(expectedGrupperingsId)
                 .withSikkerhetsnivaa(expectedSikkerhetsnivaa)
                 .withLink(expectedLink)

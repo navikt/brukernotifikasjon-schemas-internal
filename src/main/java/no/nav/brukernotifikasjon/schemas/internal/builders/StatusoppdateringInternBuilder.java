@@ -17,6 +17,12 @@ public class StatusoppdateringInternBuilder {
     private StatusGlobal statusGlobal;
     private String statusIntern;
     private String sakstema;
+    private String ulid;
+
+    public StatusoppdateringInternBuilder withUlid(String ulid) {
+        this.ulid = ulid;
+        return this;
+    }
 
     public StatusoppdateringInternBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
@@ -55,6 +61,7 @@ public class StatusoppdateringInternBuilder {
 
     public StatusoppdateringIntern build() {
         return new StatusoppdateringIntern(
+                ValidationUtil.validateNonNullFieldMaxLength(ulid, "ulid", ValidationUtil.MAX_LENGTH_ULID),
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
                 ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", ValidationUtil.MAX_LENGTH_GRUPPERINGSID),
                 ValidationUtil.validateLinkAndConvertToString(link, "link", ValidationUtil.MAX_LENGTH_LINK, ValidationUtil.isLinkRequired(Eventtype.STATUSOPPDATERING)),

@@ -4,6 +4,10 @@
     "name": "StatusoppdateringIntern",
     "fields": [
         {
+            "name": "ulid",
+            "type": "string"
+        },
+        {
             "name": "tidspunkt",
             "type": "long",
             "logicalType": "timestamp-millis"

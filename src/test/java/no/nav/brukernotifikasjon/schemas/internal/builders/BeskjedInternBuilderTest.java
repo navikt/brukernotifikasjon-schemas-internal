@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class BeskjedInternBuilderTest {
 
+    private String expectedUlid;
     private String expectedGrupperingsId;
     private int expectedSikkerhetsnivaa;
     private URL expectedLink;
@@ -33,6 +34,7 @@ public class BeskjedInternBuilderTest {
 
     @BeforeAll
     void setUp() throws MalformedURLException {
+        expectedUlid = "1x2x3x4x5";
         expectedGrupperingsId = "3456789123456";
         expectedSikkerhetsnivaa = 4;
         expectedLink = new URL("https://gyldig.url");
@@ -56,6 +58,22 @@ public class BeskjedInternBuilderTest {
         long expectedSynligFremTilAsUtcLong = expectedSynligFremTil.toInstant(ZoneOffset.UTC).toEpochMilli();
         assertThat(beskjedIntern.getSynligFremTil(), is(expectedSynligFremTilAsUtcLong));
         assertThat(beskjedIntern.getEksternVarsling(), is(expectedEksternVarsling));
+        assertThat(beskjedIntern.getUlid(), is(expectedUlid));
+    }
+
+    @Test
+    void skalIkkeGodtaUgyldigUlid() {
+        String tooLongUlid = String.join("", Collections.nCopies(101, "n"));
+        BeskjedInternBuilder builder = getBuilderWithDefaultValues().withUlid(tooLongUlid);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("ulid"));
+    }
+
+    @Test
+    void skalIkkeGodtaManglendeUlid() {
+        BeskjedInternBuilder builder = getBuilderWithDefaultValues().withUlid(null);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("ulid"));
     }
 
     @Test
@@ -125,6 +143,7 @@ public class BeskjedInternBuilderTest {
 
     private BeskjedInternBuilder getBuilderWithDefaultValues() {
         return new BeskjedInternBuilder()
+                .withUlid(expectedUlid)
                 .withGrupperingsId(expectedGrupperingsId)
                 .withSikkerhetsnivaa(expectedSikkerhetsnivaa)
                 .withLink(expectedLink)
