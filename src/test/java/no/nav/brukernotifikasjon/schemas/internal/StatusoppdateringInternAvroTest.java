@@ -1,7 +1,6 @@
-package no.nav.brukernotifikasjon.schemas.internal.builders;
+package no.nav.brukernotifikasjon.schemas.internal;
 
-import no.nav.brukernotifikasjon.schemas.internal.StatusoppdateringIntern;
-import no.nav.brukernotifikasjon.schemas.internal.builders.domain.StatusGlobal;
+import no.nav.brukernotifikasjon.schemas.internal.domain.StatusGlobal;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;

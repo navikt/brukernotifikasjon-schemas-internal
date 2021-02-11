@@ -1,6 +1,5 @@
-package no.nav.brukernotifikasjon.schemas.internal.builders;
+package no.nav.brukernotifikasjon.schemas.internal;
 
-import no.nav.brukernotifikasjon.schemas.internal.OppgaveIntern;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
