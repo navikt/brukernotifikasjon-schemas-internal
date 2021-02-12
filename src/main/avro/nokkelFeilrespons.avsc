@@ -1,0 +1,19 @@
+{
+    "type": "record",
+    "namespace": "no.nav.brukernotifikasjon.schemas.internal",
+    "name": "NokkelFeilrespons",
+    "fields": [
+        {
+            "name": "systembruker",
+            "type": "string"
+        },
+        {
+            "name": "eventId",
+            "type": "string"
+        },
+        {
+            "name": "brukernotifikasjonsType",
+            "type": "string"
+        }
+    ]
+}
