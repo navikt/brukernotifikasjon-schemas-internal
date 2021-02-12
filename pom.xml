@@ -3,13 +3,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>no.nav</groupId>
-    <artifactId>brukernotifikasjon-schemas</artifactId>
+    <artifactId>brukernotifikasjon-schemas-internal</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>brukernotifikasjon-schemas</name>
+    <name>brukernotifikasjon-schemas-internal</name>
     <description>Definitions for events in Ditt NAV</description>
-    <url>https://github.com/navikt/brukernotifikasjon-schemas</url>
+    <url>https://github.com/navikt/brukernotifikasjon-schemas-internal</url>
 
     <licenses>
         <license>
@@ -27,22 +27,11 @@
     </developers>
 
     <scm>
-        <developerConnection>scm:git:git@github.com:navikt/brukernotifikasjon-schemas.git</developerConnection>
-        <connection>scm:git:git@github.com:navikt/brukernotifikasjon-schemas.git</connection>
-        <url>https://github.com/navikt/brukernotifikasjon-schemas</url>
+        <developerConnection>scm:git:git@github.com:navikt/brukernotifikasjon-schemas-internal.git</developerConnection>
+        <connection>scm:git:git@github.com:navikt/brukernotifikasjon-schemas-internal.git</connection>
+        <url>https://github.com/navikt/brukernotifikasjon-schemas-internal</url>
         <tag>HEAD</tag>
     </scm>
-
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -114,26 +103,6 @@
             </plugin>
 
             <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.8</version>
-                <executions>
-                    <execution>
-                        <id>default-deploy</id>
-                        <phase>deploy</phase>
-                        <!-- By default, this is the phase deploy goal will bind to -->
-                        <goals>
-                            <goal>deploy</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    <serverId>ossrh</serverId>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire.version}</version>
@@ -182,27 +151,6 @@
                                 </configuration>
                             </execution>
                         </executions>
-                    </plugin>
-
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.6</version>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <gpgArguments>
-                                <arg>--pinentry-mode</arg>
-                                <arg>loopback</arg>
-                            </gpgArguments>
-                        </configuration>
                     </plugin>
                 </plugins>
             </build>

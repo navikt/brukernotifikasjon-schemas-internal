@@ -1,6 +1,5 @@
-package no.nav.brukernotifikasjon.schemas.builders;
+package no.nav.brukernotifikasjon.schemas.internal;
 
-import no.nav.brukernotifikasjon.schemas.Beskjed;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -10,33 +9,33 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class BeskjedAvroTest {
+public class BeskjedInternAvroTest {
 
     private int expectedSikkerhetsnivaa = 4;
     private boolean expectedEksternVarsling = false;
 
     @Test
     void skalSetteDefaultverdiForSikkerhetsnivaa() {
-        Beskjed beskjed = getBeskjedWithDefaultValues();
+        BeskjedIntern beskjed = getBeskjedWithDefaultValues();
         assertThat(beskjed.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
     }
 
     @Test
     void skalSetteDefaultverdiForEksternVarsling() {
-        Beskjed beskjed = getBeskjedWithDefaultValues();
+        BeskjedIntern beskjed = getBeskjedWithDefaultValues();
         assertThat(beskjed.getEksternVarsling(), is(expectedEksternVarsling));
     }
 
     @Test
     void skalSetteNullSomDefaultverdiForSynligFremTil() {
-        Beskjed beskjed = getBeskjedWithDefaultValues();
+        BeskjedIntern beskjed = getBeskjedWithDefaultValues();
         assertThat(beskjed.getSynligFremTil(), is(nullValue()));
     }
 
-    private Beskjed getBeskjedWithDefaultValues() {
-        return Beskjed.newBuilder()
+    private BeskjedIntern getBeskjedWithDefaultValues() {
+        return BeskjedIntern.newBuilder()
+                .setUlid("1x2x3x4x5")
                 .setTidspunkt(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC))
-                .setFodselsnummer("12345678901")
                 .setGrupperingsId("3456789123456")
                 .setTekst("Dette er informasjon du må lese")
                 .setLink("https://gyldig.url")

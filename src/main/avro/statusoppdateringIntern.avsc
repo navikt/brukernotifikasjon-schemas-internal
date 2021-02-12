@@ -1,23 +1,19 @@
 {
     "type": "record",
-    "namespace": "no.nav.brukernotifikasjon.schemas",
-    "name": "Oppgave",
+    "namespace": "no.nav.brukernotifikasjon.schemas.internal",
+    "name": "StatusoppdateringIntern",
     "fields": [
+        {
+            "name": "ulid",
+            "type": "string"
+        },
         {
             "name": "tidspunkt",
             "type": "long",
             "logicalType": "timestamp-millis"
         },
         {
-            "name": "fodselsnummer",
-            "type": "string"
-        },
-        {
             "name": "grupperingsId",
-            "type": "string"
-        },
-        {
-            "name": "tekst",
             "type": "string"
         },
         {
@@ -30,9 +26,17 @@
             "default": 4
         },
         {
-            "name": "eksternVarsling",
-            "type": "boolean",
-            "default": false
+            "name": "statusGlobal",
+            "type": "string"
+        },
+        {
+            "name": "statusIntern",
+            "type": ["null", "string"],
+            "default": null
+        },
+        {
+            "name": "sakstema",
+            "type": "string"
         }
     ]
 }

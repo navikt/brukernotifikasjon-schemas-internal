@@ -1,7 +1,7 @@
 {
     "type": "record",
-    "namespace": "no.nav.brukernotifikasjon.schemas",
-    "name": "Nokkel",
+    "namespace": "no.nav.brukernotifikasjon.schemas.internal",
+    "name": "NokkelIntern",
     "fields": [
         {
             "name": "systembruker",
@@ -9,6 +9,10 @@
         },
         {
             "name": "eventId",
+            "type": "string"
+        },
+        {
+            "name": "fodselsnummer",
             "type": "string"
         }
     ]
