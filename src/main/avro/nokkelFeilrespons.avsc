@@ -12,7 +12,7 @@
             "type": "string"
         },
         {
-            "name": "brukernotifikasjonsType",
+            "name": "brukernotifikasjonstype",
             "type": "string"
         }
     ]
