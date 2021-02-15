@@ -3,10 +3,10 @@ name: Build and deploy
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
-  build-and-publish-on-master:
+  build-and-publish-on-main:
     runs-on: ubuntu-latest
     steps:
 
@@ -20,7 +20,7 @@ jobs:
 
   release:
     name: Create Release
-    needs: build-and-publish-on-master
+    needs: build-and-publish-on-main
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
