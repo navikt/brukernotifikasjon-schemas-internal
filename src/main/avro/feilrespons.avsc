@@ -9,6 +9,10 @@
             "logicalType": "timestamp-millis"
         },
         {
+            "name": "status",
+            "type": "string"
+        },
+        {
             "name": "feilmelding",
             "type": "string"
         }
