@@ -9,7 +9,7 @@
             "logicalType": "timestamp-millis"
         },
         {
-            "name": "status",
+            "name": "begrunnelse",
             "type": "string"
         },
         {
