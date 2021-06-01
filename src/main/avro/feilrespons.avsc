@@ -9,6 +9,10 @@
             "logicalType": "timestamp-millis"
         },
         {
+            "name": "begrunnelse",
+            "type": "string"
+        },
+        {
             "name": "feilmelding",
             "type": "string"
         }
