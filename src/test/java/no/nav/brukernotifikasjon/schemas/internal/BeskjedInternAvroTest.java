@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
+import static java.util.Collections.emptyList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -30,6 +31,12 @@ public class BeskjedInternAvroTest {
     void skalSetteNullSomDefaultverdiForSynligFremTil() {
         BeskjedIntern beskjed = getBeskjedWithDefaultValues();
         assertThat(beskjed.getSynligFremTil(), is(nullValue()));
+    }
+
+    @Test
+    void skalSetteTomListeSomDefaultverdiForPrefererteKanaler() {
+        BeskjedIntern beskjed = getBeskjedWithDefaultValues();
+        assertThat(beskjed.getPrefererteKanaler(), is(emptyList()));
     }
 
     private BeskjedIntern getBeskjedWithDefaultValues() {

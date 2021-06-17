@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
+import static java.util.Collections.emptyList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -23,6 +24,12 @@ public class OppgaveInternAvroTest {
     void skalSetteDefaultverdiForEksternVarsling() {
         OppgaveIntern oppgave = getOppgaveWithDefaultValues();
         assertThat(oppgave.getEksternVarsling(), is(expectedEksternVarsling));
+    }
+
+    @Test
+    void skalSetteTomListeSomDefaultverdiForPrefererteKanaler() {
+        OppgaveIntern oppgave = getOppgaveWithDefaultValues();
+        assertThat(oppgave.getPrefererteKanaler(), is(emptyList()));
     }
 
     private OppgaveIntern getOppgaveWithDefaultValues() {
