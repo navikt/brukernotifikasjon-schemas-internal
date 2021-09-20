@@ -28,9 +28,7 @@ public class StatusoppdateringInternAvroTest {
 
     private StatusoppdateringIntern getStatusoppdateringWithDefaultValues() {
         return StatusoppdateringIntern.newBuilder()
-                .setUlid("1x2x3x4x5")
                 .setTidspunkt(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC))
-                .setGrupperingsId("3456789123456")
                 .setLink("https://gyldig.url")
                 .setStatusGlobal(StatusGlobal.UNDER_BEHANDLING.toString())
                 .setSakstema("FP")

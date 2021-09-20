@@ -4,17 +4,9 @@
     "name": "DoneIntern",
     "fields": [
         {
-            "name": "ulid",
-            "type": "string"
-        },
-        {
             "name": "tidspunkt",
             "type": "long",
             "logicalType": "timestamp-millis"
-        },
-        {
-            "name": "grupperingsId",
-            "type": "string"
         }
     ]
 }

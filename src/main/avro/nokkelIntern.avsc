@@ -4,7 +4,7 @@
     "name": "NokkelIntern",
     "fields": [
         {
-            "name": "systembruker",
+            "name": "ulid",
             "type": "string"
         },
         {
@@ -12,7 +12,23 @@
             "type": "string"
         },
         {
+            "name": "grupperingsId",
+            "type": "string"
+        },
+        {
             "name": "fodselsnummer",
+            "type": "string"
+        },
+        {
+            "name": "namespace",
+            "type": "string"
+        },
+        {
+            "name": "appnavn",
+            "type": "string"
+        },
+        {
+            "name": "systembruker",
             "type": "string"
         }
     ]

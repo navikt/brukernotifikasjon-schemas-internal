@@ -41,9 +41,7 @@ public class BeskjedInternAvroTest {
 
     private BeskjedIntern getBeskjedWithDefaultValues() {
         return BeskjedIntern.newBuilder()
-                .setUlid("1x2x3x4x5")
                 .setTidspunkt(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC))
-                .setGrupperingsId("3456789123456")
                 .setTekst("Dette er informasjon du må lese")
                 .setLink("https://gyldig.url")
                 .build();
