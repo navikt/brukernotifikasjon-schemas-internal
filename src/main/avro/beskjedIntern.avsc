@@ -4,10 +4,6 @@
     "name": "BeskjedIntern",
     "fields": [
         {
-            "name": "ulid",
-            "type": "string"
-        },
-        {
             "name": "tidspunkt",
             "type": "long",
             "logicalType": "timestamp-millis"
@@ -17,10 +13,6 @@
             "type": ["null", "long"],
             "logicalType": "timestamp-millis",
             "default": null
-        },
-        {
-            "name": "grupperingsId",
-            "type": "string"
         },
         {
             "name": "tekst",

@@ -4,15 +4,23 @@
     "name": "NokkelFeilrespons",
     "fields": [
         {
-            "name": "systembruker",
-            "type": "string"
-        },
-        {
             "name": "eventId",
             "type": "string"
         },
         {
             "name": "brukernotifikasjonstype",
+            "type": "string"
+        },
+        {
+            "name": "namespace",
+            "type": "string"
+        },
+        {
+            "name": "appnavn",
+            "type": "string"
+        },
+        {
+            "name": "systembruker",
             "type": "string"
         }
     ]
