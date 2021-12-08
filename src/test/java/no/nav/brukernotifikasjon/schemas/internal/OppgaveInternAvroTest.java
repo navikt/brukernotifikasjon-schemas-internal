@@ -7,6 +7,7 @@ import java.time.ZoneOffset;
 
 import static java.util.Collections.emptyList;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class OppgaveInternAvroTest {
@@ -30,6 +31,12 @@ public class OppgaveInternAvroTest {
     void skalSetteTomListeSomDefaultverdiForPrefererteKanaler() {
         OppgaveIntern oppgave = getOppgaveWithDefaultValues();
         assertThat(oppgave.getPrefererteKanaler(), is(emptyList()));
+    }
+
+    @Test
+    void SkalSetteDefaultverdiForSynnligFremTil() {
+        OppgaveIntern oppgave = getOppgaveWithDefaultValues();
+        assertThat(oppgave.getSynligFremTil(), is(nullValue()));
     }
 
     private OppgaveIntern getOppgaveWithDefaultValues() {
