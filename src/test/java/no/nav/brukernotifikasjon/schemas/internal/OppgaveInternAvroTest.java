@@ -14,7 +14,6 @@ public class OppgaveInternAvroTest {
 
     private int expectedSikkerhetsnivaa = 4;
     private boolean expectedEksternVarsling = false;
-    //private long expectedSynnligFremTil =
 
     @Test
     void skalSetteDefaultverdiForSikkerhetsnivaa() {
