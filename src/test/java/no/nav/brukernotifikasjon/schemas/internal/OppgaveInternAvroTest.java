@@ -39,6 +39,18 @@ public class OppgaveInternAvroTest {
         assertThat(oppgave.getSynligFremTil(), is(nullValue()));
     }
 
+    @Test
+    void skalSetteNullSomDefaultverdiEpostVarslingstekst() {
+        OppgaveIntern oppgave = getOppgaveWithDefaultValues();
+        assertThat(oppgave.getEpostVarslingstekst(), is(nullValue()));
+    }
+
+    @Test
+    void skalSetteNullSomDefaultverdiSmsVarslingstekst() {
+        OppgaveIntern oppgave = getOppgaveWithDefaultValues();
+        assertThat(oppgave.getSmsVarslingstekst(), is(nullValue()));
+    }
+
     private OppgaveIntern getOppgaveWithDefaultValues() {
         return OppgaveIntern.newBuilder()
                 .setTidspunkt(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC))

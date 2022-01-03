@@ -39,6 +39,18 @@ public class BeskjedInternAvroTest {
         assertThat(beskjed.getPrefererteKanaler(), is(emptyList()));
     }
 
+    @Test
+    void skalSetteNullSomDefaultverdiEpostVarslingstekst() {
+        BeskjedIntern beskjed = getBeskjedWithDefaultValues();
+        assertThat(beskjed.getEpostVarslingstekst(), is(nullValue()));
+    }
+
+    @Test
+    void skalSetteNullSomDefaultverdiSmsVarslingstekst() {
+        BeskjedIntern beskjed = getBeskjedWithDefaultValues();
+        assertThat(beskjed.getSmsVarslingstekst(), is(nullValue()));
+    }
+
     private BeskjedIntern getBeskjedWithDefaultValues() {
         return BeskjedIntern.newBuilder()
                 .setTidspunkt(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC))
