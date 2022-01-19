@@ -42,6 +42,12 @@ public class InnboksInternAvroTest {
     }
 
     @Test
+    void skalSetteNullSomDefaultverdiEpostVarslingstittel() {
+        InnboksIntern innboks = getInnboksWithDefaultValues();
+        assertThat(innboks.getEpostVarslingstittel(), is(nullValue()));
+    }
+
+    @Test
     void skalSetteNullSomDefaultverdiSmsVarslingstekst() {
         InnboksIntern innboks = getInnboksWithDefaultValues();
         assertThat(innboks.getSmsVarslingstekst(), is(nullValue()));

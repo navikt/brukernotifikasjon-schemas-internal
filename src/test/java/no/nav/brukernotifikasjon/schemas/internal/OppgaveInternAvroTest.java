@@ -46,6 +46,12 @@ public class OppgaveInternAvroTest {
     }
 
     @Test
+    void skalSetteNullSomDefaultverdiEpostVarslingstittel() {
+        OppgaveIntern oppgave = getOppgaveWithDefaultValues();
+        assertThat(oppgave.getEpostVarslingstittel(), is(nullValue()));
+    }
+
+    @Test
     void skalSetteNullSomDefaultverdiSmsVarslingstekst() {
         OppgaveIntern oppgave = getOppgaveWithDefaultValues();
         assertThat(oppgave.getSmsVarslingstekst(), is(nullValue()));
