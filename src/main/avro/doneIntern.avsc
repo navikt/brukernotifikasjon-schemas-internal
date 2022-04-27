@@ -7,6 +7,12 @@
             "name": "tidspunkt",
             "type": "long",
             "logicalType": "timestamp-millis"
+        },
+        {
+            "name": "behandlet",
+            "type": ["null", "long"],
+            "logicalType": "timestamp-millis",
+            "default": null
         }
     ]
 }
